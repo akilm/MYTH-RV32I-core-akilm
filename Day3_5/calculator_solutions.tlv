@@ -7,16 +7,19 @@
    
    |calc // Calculator 
       @1
-         $val1[31:0] = >>2$out;
-         $val2[31:0] = $rand2[3:0];
-         $sum[31:0] = $val1 + $val2;
-         $diff[31:0] = $val1 - $val2;
-         $prod[31:0] = $val1 * $val2;
-         $quot[31:0] = $val1 / $val2;
-         
-         $valid = $reset ? 1'b0 : (>>1$valid + 1);
-      @2   
-         $out[31:0] = ($reset|(!$valid))?( 32'b0 ): ($op[1] ? ($op[0] ? $quot[31:0]:$prod[31:0]):($op[0] ? $diff[31:0]:$sum[31:0]));
+         $valid_or_reset = $valid || $reset;
+      ?$valid_or_reset
+         @1
+            $val1[31:0] = >>2$out;
+            $val2[31:0] = $rand2[3:0];
+            $sum[31:0] = $val1 + $val2;
+            $diff[31:0] = $val1 - $val2;
+            $prod[31:0] = $val1 * $val2;
+            $quot[31:0] = $val1 / $val2;
+
+            $valid = $reset ? 1'b0 : (>>1$valid + 1);
+         @2   
+            $out[31:0] = ($reset)?( 32'b0 ): ($op[1] ? ($op[0] ? $quot[31:0]:$prod[31:0]):($op[0] ? $diff[31:0]:$sum[31:0]));
          
          // Counter
          
