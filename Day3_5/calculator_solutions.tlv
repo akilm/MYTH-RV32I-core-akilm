@@ -19,7 +19,8 @@
 
             $valid = $reset ? 1'b0 : (>>1$valid + 1);
          @2   
-            $out[31:0] = ($reset)?( 32'b0 ): ($op[1] ? ($op[0] ? $quot[31:0]:$prod[31:0]):($op[0] ? $diff[31:0]:$sum[31:0]));
+            $mem[31:0] = $reset ?  32'b0 : (($op == 3'b101)? >>2$out[31:0] : >>2$mem[31:0]);
+            $out[31:0] = $reset ?  32'b0 : ( $op[2] ? >>2$mem[31:0] : ($op[1] ? ($op[0] ? $quot[31:0]:$prod[31:0]):($op[0] ? $diff[31:0]:$sum[31:0])));
          
          // Counter
          
