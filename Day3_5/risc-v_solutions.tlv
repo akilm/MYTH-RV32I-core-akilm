@@ -68,12 +68,26 @@
                       $is_j_instr ? { $instr[31:12],12'b0 } :
                       $is_u_instr ? { {12{$instr[31]}},$instr[19:12],$instr[20],$instr[30:21],1'b0} : 32'b0;
          
+         
+         $funct3_valid = $is_i_instr || $is_r_instr || $is_s_instr || $is_b_instr ;
+         $funct7_valid = $is_r_instr ;
+         $rd_valid = $is_i_instr || $is_r_instr || $is_j_instr || $is_u_instr;
+         $rs1_valid = $is_i_instr || $is_r_instr || $is_s_instr || $is_b_instr ;
+         $rs2_valid = $is_r_instr || $is_s_instr || $is_b_instr ;
+        
          $opcode[6:0] = $instr[6:0];
-         $funct3[3:0] = $instr[14:12];
-         $funct7[7:0] = $instr[31:25];
-         $rd[4:0] = $instr[11:7];
-         $rs1[4:0] = $instr[19:15];
-         $rs2[4:0] = $instr[24:20];
+         ?$funct3_valid
+            $funct3[3:0] = $instr[14:12];
+         ?$funct7_valid
+            $funct7[7:0] = $instr[31:25];
+         ?$rd_valid
+            $rd[4:0] = $instr[11:7];
+         ?$rs1_valid
+            $rs1[4:0] = $instr[19:15];
+         ?$rs2_valid
+            $rs2[4:0] = $instr[24:20];
+         
+         
          
       // Note: Because of the magic we are using for visualisation, if visualisation is enabled below,
       //       be sure to avoid having unassigned signals (which you might be using for random inputs)
