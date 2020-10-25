@@ -108,6 +108,10 @@
          
          $result[31:0] = $isaddi ? $src1_value + $imm:
                          $isadd ? $src1_value + $src2_value: 32'bx;
+         
+         $rf_wr_en = $rd_valid ? ($rd? 1'b1 : 1'b0) :1'b0;  
+         $rf_wr_data[31:0] = $result;
+         $rf_wr_index[4:0] = $rd;
       // Note: Because of the magic we are using for visualisation, if visualisation is enabled below,
       //       be sure to avoid having unassigned signals (which you might be using for random inputs)
       //       other than those specifically expected in the labs. You'll get strange errors for these.
