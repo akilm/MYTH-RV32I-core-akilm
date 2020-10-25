@@ -68,6 +68,13 @@
                       $is_j_instr ? { $instr[31:12],12'b0 } :
                       $is_u_instr ? { {12{$instr[31]}},$instr[19:12],$instr[20],$instr[30:21],1'b0} : 32'b0;
          
+         $opcode = $instr[6:0];
+         $funct3 = $instr[14:12];
+         $funct7 = $instr[31:25];
+         $rd = $instr[11:7];
+         $rs1 = $instr[19:15];
+         $rs2 = $instr[24:20];
+         
       // Note: Because of the magic we are using for visualisation, if visualisation is enabled below,
       //       be sure to avoid having unassigned signals (which you might be using for random inputs)
       //       other than those specifically expected in the labs. You'll get strange errors for these.
