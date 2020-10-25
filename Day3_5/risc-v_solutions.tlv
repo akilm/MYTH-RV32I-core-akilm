@@ -87,6 +87,18 @@
          ?$rs2_valid
             $rs2[4:0] = $instr[24:20];
          
+         $dec_bits[10:0] = {$funct7[5],$funct3,$opcode};
+         
+         $isbeq = $dec_bits ==? 11'bx_000_1100011;
+         $isbne = $dec_bits ==? 11'bx_001_1100011;
+         $isblt = $dec_bits ==? 11'bx_100_1100011;
+         $isbge = $dec_bits ==? 11'bx_101_1100011;
+         $isbltu = $dec_bits ==? 11'bx_110_1100011;
+         $isbgeu = $dec_bits ==? 11'bx_111_1100011;
+         
+         $isaddi = $dec_bits ==? 11'bx_000_0010011;
+         
+         $isadd = $dec_bits ==? 11'b0_000_0110011;
          
          
       // Note: Because of the magic we are using for visualisation, if visualisation is enabled below,
