@@ -105,6 +105,9 @@
          
          $src1_value[31:0] = $rf_rd_data1;
          $src2_value[31:0] = $rf_rd_data1;
+         
+         $result[31:0] = $isaddi ? $src1_value + $imm:
+                         $isadd ? $src1_value + $src2_value: 32'bx;
       // Note: Because of the magic we are using for visualisation, if visualisation is enabled below,
       //       be sure to avoid having unassigned signals (which you might be using for random inputs)
       //       other than those specifically expected in the labs. You'll get strange errors for these.
