@@ -42,6 +42,10 @@
          $reset = *reset;
          $pc[31:0] = >>1$reset ? 32'd0 : 
                      >>1$taken_br? >>1$br_tgt_pc:>>1$pc + 32'd4;
+         $start = (>>1$reset == 1'b1) && ($reset == 1'b0);
+         $valid = $reset ? 1'b0:
+                  $start ? 1'b1: >>3$valid;
+                  
       @1
          $imem_rd_en = !$reset;
          $imem_rd_addr[M4_IMEM_INDEX_CNT-1:0] = $pc[M4_IMEM_INDEX_CNT+1:2];
@@ -124,7 +128,7 @@
                      
          $br_tgt_pc[31:0] = $pc+$imm;           
       
-     
+      
       // Note: Because of the magic we are using for visualisation, if visualisation is enabled below,
       //       be sure to avoid having unassigned signals (which you might be using for random inputs)
       //       other than those specifically expected in the labs. You'll get strange errors for these.
