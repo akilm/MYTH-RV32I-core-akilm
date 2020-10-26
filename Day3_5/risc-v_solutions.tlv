@@ -41,10 +41,10 @@
       @0
          $reset = *reset;
          $pc[31:0] = >>1$reset ? 32'd0 : 
-                     >>3$valid_taken_br? >>3$br_tgt_pc:>>3$pc+32'd4 ;
+                     >>3$valid_taken_br? >>3$br_tgt_pc:>>1$inc_pc ;
          $start = (>>1$reset == 1'b1) && ($reset == 1'b0);
-         $valid = $reset ? 1'b0:
-                  $start ? 1'b1: >>3$valid;
+         //$valid = $reset ? 1'b0:
+          //        $start ? 1'b1: >>3$valid;
                   
       @1
          $inc_pc[31:0] = $pc + 32'd4;
@@ -110,11 +110,12 @@
          $rf_rd_index1[4:0] = $rs1[4:0];
          $rf_rd_index2[4:0] = $rs2[4:0];
            
-         $src1_value[31:0] = ((>>1$rf_wr_en==1)&&(>>1$rd == >>1$rs1)) ? >>1$result : $rf_rd_data1;
-         $src2_value[31:0] = ((>>1$rf_wr_en==1)&&(>>1$rd == >>1$rs2)) ? >>1$result : $rf_rd_data2;
+         $src1_value[31:0] = ((>>1$rf_wr_en==1)&&(>>1$rd[4:0] == $rf_rd_index1)) ? >>1$result : $rf_rd_data1;
+         $src2_value[31:0] = ((>>1$rf_wr_en==1)&&(>>1$rd[4:0] == $rf_rd_index2)) ? >>1$result : $rf_rd_data2;
          $br_tgt_pc[31:0] = $pc+$imm;
          
       @3   
+         $valid = !(>>1$taken_br || >>2$taken_br);
          $result[31:0] = $isaddi ? $src1_value + $imm:
                          $isadd ? $src1_value + $src2_value: 32'bx;
          
