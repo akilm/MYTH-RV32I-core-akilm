@@ -36,7 +36,7 @@
    m4_asm(LW,  r15, r0,  100)   
    
    // Optional:
-   // m4_asm(JAL, r7, 00000000000000000000) // Done. Jump to itself (infinite loop). (Up to 20-bit signed immediate plus implicit 0 bit (unlike JALR) provides byte address; last immediate bit should also be 0)
+   m4_asm(JAL, r7, 00000000000000000000) // Done. Jump to itself (infinite loop). (Up to 20-bit signed immediate plus implicit 0 bit (unlike JALR) provides byte address; last immediate bit should also be 0)
    m4_define_hier(['M4_IMEM'], M4_NUM_INSTRS)
 
    |cpu
@@ -44,7 +44,9 @@
          $reset = *reset;
          $pc[31:0] = >>1$reset ? 32'd0 :
                      >>3$valid_load ? >>3$inc_pc:
-                     >>3$taken_br? >>3$br_tgt_pc:>>1$inc_pc ;
+                     >>3$taken_br? >>3$br_tgt_pc:
+                     (>>3$valid_jump && >>3$is_jal) ? >>3$br_tgt_pc :
+                     (>>3$valid_jump && >>3$is_jalr) ? >>3$jalr_tgt_pc : >>1$inc_pc;
                      
          //$start = (>>1$reset == 1'b1) && ($reset == 1'b0);
          //$valid = $reset ? 1'b0:
@@ -135,6 +137,8 @@
          $is_or = $dec_bits ==? 11'b0_110_0110011;
          $is_and = $dec_bits ==? 11'b0_111_0110011;
          //end of decode stage
+         
+         $is_jump = $is_jal || $is_jalr;
       @2
          $rf_rd_en1 = $rs1_valid ? 1'b1:1'b0;
          $rf_rd_en2 = $rs2_valid ? 1'b1:1'b0;
@@ -145,7 +149,7 @@
          $src1_value[31:0] = ((>>1$rf_wr_en==1'b1)&&(>>1$rd[4:0] == $rf_rd_index1)) ? >>1$result : $rf_rd_data1[31:0];
          $src2_value[31:0] = ((>>1$rf_wr_en==1'b1)&&(>>1$rd[4:0] == $rf_rd_index2)) ? >>1$result : $rf_rd_data2[31:0];
          $br_tgt_pc[31:0] = $pc+$imm;
-         
+         $jalr_tgt_pc[31:0] = $src1_value + $imm;
       @3   
          
          
@@ -194,7 +198,8 @@
          
          $valid_taken_br = $valid && $taken_br;
          $valid_load = $valid && $is_load;
-         $valid = !(>>1$valid_taken_br || >>2$valid_taken_br || >>1$valid_load || >>2$valid_load );
+         $valid_jump = $valid && $is_jump;
+         $valid = !(>>1$valid_taken_br || >>2$valid_taken_br || >>1$valid_load || >>2$valid_load || >>1$valid_jump || >>2$valid_jump);
       
       @4
          $dmem_wr_data[31:0] = $src2_value[31:0];
