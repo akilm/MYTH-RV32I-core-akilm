@@ -41,7 +41,7 @@
       @0
          $reset = *reset;
          $pc[31:0] = >>1$reset ? 32'd0 : 
-                     >>1$taken_br? >>1$br_tgt_pc:>>1$pc + 32'd4;
+                     >>3$valid_taken_br? >>3$br_tgt_pc:>>3$pc + 32'd4;
          $start = (>>1$reset == 1'b1) && ($reset == 1'b0);
          $valid = $reset ? 1'b0:
                   $start ? 1'b1: >>3$valid;
@@ -115,7 +115,7 @@
          $result[31:0] = $isaddi ? $src1_value + $imm:
                          $isadd ? $src1_value + $src2_value: 32'bx;
          
-         $rf_wr_en = $rd_valid ? ($rd? 1'b1 : 1'b0) :1'b0;  
+         $rf_wr_en = $valid? ($rd_valid ? ($rd? 1'b1 : 1'b0) :1'b0) : 1'b0 ;  
          $rf_wr_data[31:0] = $result;
          $rf_wr_index[4:0] = $rd;
          
@@ -125,9 +125,10 @@
                      $isbge ? (($src1_value>=$src2_value)^($src1_value[31]!=$src2_value[31])) :
                      $isbltu? ($src1_value<$src2_value) :
                      $isbgeu? ($src1_value>=$src2_value): 1'b0 ;
-                     
+         
+         $valid_taken_br = $valid && $taken_br;
          $br_tgt_pc[31:0] = $pc+$imm;           
-      
+         
       
       // Note: Because of the magic we are using for visualisation, if visualisation is enabled below,
       //       be sure to avoid having unassigned signals (which you might be using for random inputs)
