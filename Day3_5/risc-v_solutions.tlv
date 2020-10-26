@@ -149,6 +149,8 @@
          
         
          $result[31:0] = $isaddi ? $src1_value + $imm:
+                         $is_load ? $src1_value + $imm:
+                         $is_s_instr ? $src1_value + $imm:
                          $isadd ? $src1_value + $src2_value: 
                          $is_sub ? $src1_value - $src2_value :
                          $is_sll ? $src1_value << $src2_value[4:0] :
@@ -185,9 +187,9 @@
          $valid_load = $valid && $is_load;
 
          $valid = (!(>>1$taken_br || >>2$taken_br))&&(!(>>1$is_load||>>2$is_load));
-         $rf_wr_en = $valid? ($rd_valid ? ($rd? 1'b1 : 1'b0) :1'b0) : 1'b0 ;  
-         $rf_wr_data[31:0] = $result;
-         $rf_wr_index[4:0] = $rd;
+         $rf_wr_en =   ($rd_valid && $rd != 5'b0 && $valid) || >>2$valid_load;  
+         $rf_wr_data[31:0] = >>2$valid_load? >>2$ld_data : $result ;
+         $rf_wr_index[4:0] = >>2$valid_load? >>2$rd : $rd;
          
          
       
