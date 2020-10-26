@@ -32,6 +32,8 @@
    m4_asm(ADDI, r13, r13, 1)            // Increment intermediate register by 1
    m4_asm(BLT, r13, r12, 1111111111000) // If a3 is less than a2, branch to label named <loop>
    m4_asm(ADD, r10, r14, r0)            // Store final result to register a0 so that it can be read by main program
+   m4_asm(SW,  r0,  r10, 100)           
+   m4_asm(LW,  r15, r0,  100)   
    
    // Optional:
    // m4_asm(JAL, r7, 00000000000000000000) // Done. Jump to itself (infinite loop). (Up to 20-bit signed immediate plus implicit 0 bit (unlike JALR) provides byte address; last immediate bit should also be 0)
@@ -41,18 +43,17 @@
       @0
          $reset = *reset;
          $pc[31:0] = >>1$reset ? 32'd0 :
-                     >>3$valid_load ? >>3$pc:
-                     >>3$valid_taken_br? >>3$br_tgt_pc:>>1$inc_pc ;
+                     >>3$valid_load ? >>3$inc_pc:
+                     >>3$taken_br? >>3$br_tgt_pc:>>1$inc_pc ;
                      
-         $start = (>>1$reset == 1'b1) && ($reset == 1'b0);
+         //$start = (>>1$reset == 1'b1) && ($reset == 1'b0);
          //$valid = $reset ? 1'b0:
           //        $start ? 1'b1: >>3$valid;
-                  
-      @1
-         $inc_pc[31:0] = $pc + 32'd4;
          $imem_rd_en = !$reset;
          $imem_rd_addr[M4_IMEM_INDEX_CNT-1:0] = $pc[M4_IMEM_INDEX_CNT+1:2];
-         $instr[32:0] = $imem_rd_data;
+      @1
+         $inc_pc[31:0] = $pc + 32'd4;
+         $instr[31:0] = $imem_rd_data;
          
          $is_i_instr = $instr[6:2] ==? 5'b0000x ||
                        $instr[6:2] ==? 5'b001x0 ||
@@ -108,11 +109,11 @@
          $isbltu = $dec_bits ==? 11'bx_110_1100011;
          $isbgeu = $dec_bits ==? 11'bx_111_1100011;
          
-         $is_load = $dec_bits == 11'bx_xxx_0000011; //load
+         $is_load = $dec_bits ==? 11'bx_xxx_0000011; //load
          
-         $issb = $dec_bits ==? 11'bx_000_0100011;
-         $issh = $dec_bits ==? 11'bx_001_0100011;
-         $issw = $dec_bits ==? 11'bx_010_0100011;
+         //$issb = $dec_bits ==? 11'bx_000_0100011;
+        // $issh = $dec_bits ==? 11'bx_001_0100011;
+         $is_sw = $dec_bits ==? 11'bx_010_0100011;
          
          $isaddi = $dec_bits ==? 11'bx_000_0010011;
          $isadd = $dec_bits ==? 11'b0_000_0110011;
@@ -137,11 +138,12 @@
       @2
          $rf_rd_en1 = $rs1_valid ? 1'b1:1'b0;
          $rf_rd_en2 = $rs2_valid ? 1'b1:1'b0;
-         $rf_rd_index1[4:0] = $rs1[4:0];
-         $rf_rd_index2[4:0] = $rs2[4:0];
+         
+         $rf_rd_index1[4:0] = $rf_rd_en1 ? $rs1[4:0]: 5'bx;
+         $rf_rd_index2[4:0] = $rf_rd_en2 ? $rs2[4:0]: 5'bx;
            
-         $src1_value[31:0] = ((>>1$rf_wr_en==1)&&(>>1$rd[4:0] == $rf_rd_index1)) ? >>1$result : $rf_rd_data1;
-         $src2_value[31:0] = ((>>1$rf_wr_en==1)&&(>>1$rd[4:0] == $rf_rd_index2)) ? >>1$result : $rf_rd_data2;
+         $src1_value[31:0] = ((>>1$rf_wr_en==1'b1)&&(>>1$rd[4:0] == $rf_rd_index1)) ? >>1$result : $rf_rd_data1[31:0];
+         $src2_value[31:0] = ((>>1$rf_wr_en==1'b1)&&(>>1$rd[4:0] == $rf_rd_index2)) ? >>1$result : $rf_rd_data2[31:0];
          $br_tgt_pc[31:0] = $pc+$imm;
          
       @3   
@@ -183,14 +185,25 @@
                      $isbltu? ($src1_value<$src2_value) :
                      $isbgeu? ($src1_value>=$src2_value): 1'b0 ;
          
+         
+
+         
+         $rf_wr_en =   ($rd_valid && $rd != 5'b0 && $valid) || >>2$valid_load;  
+         $rf_wr_data[31:0] = !$valid ? >>2$ld_data[31:0] : $result[31:0];
+         $rf_wr_index[4:0] = !$valid ? >>2$rd[4:0] : $rd[4:0];
+         
          $valid_taken_br = $valid && $taken_br;
          $valid_load = $valid && $is_load;
-
-         $valid = (!(>>1$taken_br || >>2$taken_br))&&(!(>>1$is_load||>>2$is_load));
-         $rf_wr_en =   ($rd_valid && $rd != 5'b0 && $valid) || >>2$valid_load;  
-         $rf_wr_data[31:0] = >>2$valid_load? >>2$ld_data : $result ;
-         $rf_wr_index[4:0] = >>2$valid_load? >>2$rd : $rd;
-         
+         $valid = !(>>1$valid_taken_br || >>2$valid_taken_br || >>1$valid_load || >>2$valid_load );
+      
+      @4
+         $dmem_wr_data[31:0] = $src2_value[31:0];
+         $dmem_wr_en = $is_s_instr && $valid;
+         $dmem_addr[3:0] = $result[5:2];
+         $dmem_rd_en = $valid_load;
+      @5
+         //reading data to load data
+         $ld_data[31:0] = $dmem_rd_data[31:0];
          
       
       // Note: Because of the magic we are using for visualisation, if visualisation is enabled below,
@@ -198,8 +211,9 @@
       //       other than those specifically expected in the labs. You'll get strange errors for these.
 
    
+         //*passed = |cpu/xreg[15]>>5$value == (1+2+3+4+5+6+7+8+9);
    // Assert these to end simulation (before Makerchip cycle limit).
-   *passed = |cpu/xreg[10]>>5$value == (1+2+3+4+5+6+7+8+9);
+   *passed = |cpu/xreg[15]>>5$value == (1+2+3+4+5+6+7+8+9);
    *failed = 1'b0;
    
    // Macro instantiations for:
@@ -210,9 +224,9 @@
    |cpu
       m4+imem(@1)    // Args: (read stage)
       m4+rf(@2, @3)  // Args: (read stage, write stage) - if equal, no register bypass is required
-      //m4+dmem(@4)    // Args: (read/write stage)
+      m4+dmem(@4)    // Args: (read/write stage)
    
-   m4+cpu_viz(@4)    // For visualisation, argument should be at least equal to the last stage of CPU logic
+   //m4+cpu_viz(@4)    // For visualisation, argument should be at least equal to the last stage of CPU logic
                        // @4 would work for all labs
 \SV
    endmodule
