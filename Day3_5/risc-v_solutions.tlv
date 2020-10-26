@@ -40,8 +40,10 @@
    |cpu
       @0
          $reset = *reset;
-         $pc[31:0] = >>1$reset ? 32'd0 : 
+         $pc[31:0] = >>1$reset ? 32'd0 :
+                     >>3$valid_load ? >>3$pc:
                      >>3$valid_taken_br? >>3$br_tgt_pc:>>1$inc_pc ;
+                     
          $start = (>>1$reset == 1'b1) && ($reset == 1'b0);
          //$valid = $reset ? 1'b0:
           //        $start ? 1'b1: >>3$valid;
@@ -143,7 +145,7 @@
          $br_tgt_pc[31:0] = $pc+$imm;
          
       @3   
-         $valid = !(>>1$taken_br || >>2$taken_br);
+         
          
         
          $result[31:0] = $isaddi ? $src1_value + $imm:
@@ -180,7 +182,9 @@
                      $isbgeu? ($src1_value>=$src2_value): 1'b0 ;
          
          $valid_taken_br = $valid && $taken_br;
-         
+         $valid_load = $valid && $is_load;
+
+         $valid = (!(>>1$taken_br || >>2$taken_br))&&(!(>>1$is_load||>>2$is_load));
          $rf_wr_en = $valid? ($rd_valid ? ($rd? 1'b1 : 1'b0) :1'b0) : 1'b0 ;  
          $rf_wr_data[31:0] = $result;
          $rf_wr_index[4:0] = $rd;
