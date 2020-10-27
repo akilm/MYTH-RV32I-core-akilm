@@ -36,7 +36,7 @@
    m4_asm(LW,  r15, r0,  100)   
    
    // Optional:
-   m4_asm(JAL, r7, 00000000000000000000) // Done. Jump to itself (infinite loop). (Up to 20-bit signed immediate plus implicit 0 bit (unlike JALR) provides byte address; last immediate bit should also be 0)
+   //m4_asm(JAL, r7, 00000000000000000000) // Done. Jump to itself (infinite loop). (Up to 20-bit signed immediate plus implicit 0 bit (unlike JALR) provides byte address; last immediate bit should also be 0)
    m4_define_hier(['M4_IMEM'], M4_NUM_INSTRS)
 
    |cpu
@@ -47,6 +47,7 @@
                      >>3$taken_br? >>3$br_tgt_pc:
                      (>>3$valid_jump && >>3$is_jal) ? >>3$br_tgt_pc :
                      (>>3$valid_jump && >>3$is_jalr) ? >>3$jalr_tgt_pc : >>1$inc_pc;
+                     
                      
          //$start = (>>1$reset == 1'b1) && ($reset == 1'b0);
          //$valid = $reset ? 1'b0:
@@ -100,16 +101,16 @@
          
          $dec_bits[10:0] = {$funct7[5],$funct3,$opcode};
          
-         $islui = $dec_bits ==? 11'bx_xxx_0110111;
-         $isauipc = $dec_bits ==? 11'bx_xxx_0010111;
-         $isjal = $dec_bits ==? 11'bx_xxx_1101111;
+         $is_lui = $dec_bits ==? 11'bx_xxx_0110111;
+         $is_auipc = $dec_bits ==? 11'bx_xxx_0010111;
+         $is_jal = $dec_bits ==? 11'bx_xxx_1101111;
          $is_jalr = $dec_bits ==? 11'bx_000_1100111;
-         $isbeq = $dec_bits ==? 11'bx_000_1100011;
-         $isbne = $dec_bits ==? 11'bx_001_1100011;
-         $isblt = $dec_bits ==? 11'bx_100_1100011;
-         $isbge = $dec_bits ==? 11'bx_101_1100011;
-         $isbltu = $dec_bits ==? 11'bx_110_1100011;
-         $isbgeu = $dec_bits ==? 11'bx_111_1100011;
+         $is_beq = $dec_bits ==? 11'bx_000_1100011;
+         $is_bne = $dec_bits ==? 11'bx_001_1100011;
+         $is_blt = $dec_bits ==? 11'bx_100_1100011;
+         $is_bge = $dec_bits ==? 11'bx_101_1100011;
+         $is_bltu = $dec_bits ==? 11'bx_110_1100011;
+         $is_bgeu = $dec_bits ==? 11'bx_111_1100011;
          
          $is_load = $dec_bits ==? 11'bx_xxx_0000011; //load
          
@@ -117,10 +118,10 @@
         // $issh = $dec_bits ==? 11'bx_001_0100011;
          $is_sw = $dec_bits ==? 11'bx_010_0100011;
          
-         $isaddi = $dec_bits ==? 11'bx_000_0010011;
-         $isadd = $dec_bits ==? 11'b0_000_0110011;
-         $isslti = $dec_bits ==? 11'bx_010_0010011;
-         $issltiu = $dec_bits ==? 11'bx_011_0010011;
+         $is_addi = $dec_bits ==? 11'bx_000_0010011;
+         $is_add = $dec_bits ==? 11'b0_000_0110011;
+         $is_slti = $dec_bits ==? 11'bx_010_0010011;
+         $is_sltiu = $dec_bits ==? 11'bx_011_0010011;
          $is_xori = $dec_bits ==? 11'bx_100_0010011;
          $is_ori = $dec_bits ==? 11'bx_110_0010011;
          $is_andi = $dec_bits ==? 11'bx_111_0010011;
@@ -154,10 +155,10 @@
          
          
         
-         $result[31:0] = $isaddi ? $src1_value + $imm:
+         $result[31:0] = $is_addi ? $src1_value + $imm:
                          $is_load ? $src1_value + $imm:
                          $is_s_instr ? $src1_value + $imm:
-                         $isadd ? $src1_value + $src2_value: 
+                         $is_add ? $src1_value + $src2_value: 
                          $is_sub ? $src1_value - $src2_value :
                          $is_sll ? $src1_value << $src2_value[4:0] :
                          $is_srl ? $src1_value >> $src2_value[4:0] :
@@ -182,12 +183,12 @@
                          
                          
          
-         $taken_br = $isbeq ? ($src1_value==$src2_value) :
-                     $isbne ? ($src1_value!=$src2_value) :
-                     $isblt ? (($src1_value<$src2_value)^($src1_value[31]!=$src2_value[31])) :
-                     $isbge ? (($src1_value>=$src2_value)^($src1_value[31]!=$src2_value[31])) :
-                     $isbltu? ($src1_value<$src2_value) :
-                     $isbgeu? ($src1_value>=$src2_value): 1'b0 ;
+         $taken_br = $is_beq ? ($src1_value==$src2_value) :
+                     $is_bne ? ($src1_value!=$src2_value) :
+                     $is_blt ? (($src1_value<$src2_value)^($src1_value[31]!=$src2_value[31])) :
+                     $is_bge ? (($src1_value>=$src2_value)^($src1_value[31]!=$src2_value[31])) :
+                     $is_bltu? ($src1_value<$src2_value) :
+                     $is_bgeu? ($src1_value>=$src2_value): 1'b0 ;
          
          
 
