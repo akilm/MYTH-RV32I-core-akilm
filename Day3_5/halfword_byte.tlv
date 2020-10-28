@@ -37,6 +37,10 @@
    m4_asm(SH,  r0, r10, 1010)
    m4_asm(ADDI, r6,r0, 10101010)
    m4_asm(SB,  r0, r6, 1000)
+   m4_asm(LB, r7,r0,1000)
+   m4_asm(LBU,r8,r0,1000)
+   m4_asm(LH, r3,r0,1000)
+   m4_asm(LHU,r4,r0,1000)
    
    // Optional:
    //m4_asm(JAL, r7, 00000000000000000000) // Done. Jump to itself (infinite loop). (Up to 20-bit signed immediate plus implicit 0 bit (unlike JALR) provides byte address; last immediate bit should also be 0)
