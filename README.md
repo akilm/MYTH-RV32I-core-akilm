@@ -43,15 +43,17 @@ To avoid all the hassles of individually installing the compiler and the simulat
 1. If git is installed in your local machine, use the following git command in your terminal to clone the repository at a desired location.Alternatively you can also go to https://github.com/kunalg123/riscv_workshop_collaterals to download the repository using the github gui as a zip file.<br/>
 `$git clone https://github.com/kunalg123/riscv_workshop_collaterals.git`
 </br>
-
+![Step 1](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/step1install.PNG)
 2. Change the current working directory to the folder installed in the previous step. <br/>
 `$cd riscv_workshop_collaterals`
 <br/>
-
+![Step 2](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/install2.PNG)
 3. For installation of the complete toolchain,make the shell file executable by using chmos and then  run the "run.sh" shell script. For this, type the following command:<br/>
 `$chmod +x run.sh`<br/>
 `$./run.sh`
 <br/>
+![Step 3.1](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/install3.PNG)
+![Step 3.2](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/install4.PNG)
 Now the environment is setup and the next steps would explain about how to use the tools.
 
 ## Compiling a C Code to RISC V and simulations
@@ -59,6 +61,7 @@ Create a C-program using any text editor and save it as a .c file. In this case,
 
 1. Open any text editor, write a program in C and save it as a .c file.<br/>
 `$leafpad sum1ton.c`
+![code](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/leafpad.PNG)
 2. Compile the program using the GCC Compiler. <br/>
 `$gcc sum1ton.c`
 3. To run the compiled object file (Default file with name a.out will automatically be formed after compilation) use : <br/>
@@ -70,11 +73,12 @@ Comparing the Instruction sets x86 and RISC-V :-<br/>
 `$gcc -o <object filename> <C-filename>`
 2. To view the disassembly/assembly code - x86 :<br/>
 `$objdump -d -M intel -s <object filename compiled using gcc>`
+![x86 assembly code - Main Function](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/RISCV%20vs%20x86%201.PNG)
 3. To compile with RISC-V GCC compiler:<br/>
 `$riscv64-unknown-elf-gcc <compiler option -O1 ; Ofast> <ABI specifier -lp64; -lp32; -ilp32> <architecture specifier -RV64 ; RV32> -o <object filename> <C filename>` 
 4. To view the disassembly/assembly code - RISC V :<br/>
 `$riscv64-unknown-elf-objdump -d <object filename> | less` 
-
+![RISC V assembly code - Main Function](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/RISCV%20vs%20x86.PNG)
 
 
 Viewing the assembly files would give a clear picture of the number of instructions used for the same program in both the cases.
