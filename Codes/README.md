@@ -49,7 +49,8 @@ To avoid all the hassles of individually installing the compiler and the simulat
 `$cd riscv_workshop_collaterals`
 <br/>
 
-3. For installation of the complete toolchain, run the "run.sh" shell script. For this, type the following command:<br/>
+3. For installation of the complete toolchain,make the shell file executable by using chmos and then  run the "run.sh" shell script. For this, type the following command:<br/>
+`$ chmod +x run.sh`<br/>
 `$./run.sh`
 <br/>
 <insert image>
@@ -60,13 +61,11 @@ Create a C-program using any text editor and save it as a .c file. In this case,
 
 1. Open any text editor, write a program in C and save it as a .c file.<br/>
 `$leafpad sum1ton.c`
-<image>
 2. Compile the program using the GCC Compiler. <br/>
 `$gcc sum1ton.c`
 
 3. To run the compiled object file (Default file with name a.out will automatically be formed after compilation) use : <br/>
 `$./a.out`
-<image>
 
 Comparing the Instruction sets x86 and RISC-V :-<br/>
 
@@ -119,7 +118,6 @@ The main program is rewritten in terms of an ABI call from the main c program . 
 [Makerchip IDE](https://www.makerchip.com/sandbox/#) is a free online environment for developing high-quality integrated circuits. You can code, compile, simulate, and debug Verilog designs, all from your browser. Your code, block diagrams, and waveforms are tightly integrated.
 <br/>
 Makerchip IDE is kind enought to make-up random values for un-assigned signals and the waveforms can be viewed in the waveforms tab on the right. Waveforms are organized by TL-Verilog design hierarchy. Waveforms clearly show when signals are carrying meaningful data. designs are represented in logic diagrams. TL-Verilog design hierarchy, including pipelines and pipeline stages, provides organization to the logic diagrams. 
-<link>
 <snapshots>
 
 ## Combinational logic 
