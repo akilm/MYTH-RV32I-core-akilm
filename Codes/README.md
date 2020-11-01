@@ -1,10 +1,9 @@
 # RISC-V Processor Design with TL-Verilog
 **README Still under PROGRESS**
 <br/>This repository contains all the information needed to build your RISC-V pipelined core, which has support of base interger RV32I instruction format using TL-Verilog on makerchip platform.
+The core was built during the MYTH (Microprocessor for you in thirty hours) Workshop conducted by Kunal Ghosh (VLSI System Design) and Steve Hoover (Redwood EDA) . The first two days was focussed on how an application written in higher level language (C, C++, JAVA, Python) communicates with the processor, details such as how a compiler / assembler works, interfaces between the Application layer --> OS and RTL, An introduction to RISC V ISA taught by Kunal Ghosh. Days 3-5 were all about Computer Architecture, RISCV ISA and Implementing a 3 stage pipelined RISCV Core on Makerchip IDE using TL-Verilog taught by Steve Hoover.
 
 # RISC V ISA 
-
-<In this workshop kunal ghosh part > 
 
 ## Introduction
 
@@ -26,8 +25,8 @@ The ISA base and its extensions are developed in a collective effort between ind
 More details on RISC-V ISA can be obtained [here].
 
 # RISC-V Toolchain 
-The toolchain flow involves a compiler and simulator. In this workshop inc
-<Workshop Details> and installation.
+A generic RISC V toolchain involves a compiler to compile the source code to RISC-V target and a simulator for debugging the code. In this workshop, GCC cross compiler was used to compile the c-program and spike simulator to debug and verify the code.
+
 
 ## RISC-V GNU Compiler Toolchain  
 A compiler is a special program that processes statements written in a particular programming language (C, C++, JAVA etc) and turns them into machine language (ASM) or "code" that a computer's processor uses. The GNU Compiler Collection (GCC) is a compiler system produced by the GNU Project supporting various programming languages.
@@ -35,91 +34,89 @@ To Install the complete tool chain in your locally on your linux machine, refer 
 
 
 ## Spike Simulator
-Spike is the golden reference functional RISC-V ISA C++ sofware simulator. It provides full system emulation or proxied emulation with HTIF/FESVR. It serves as a starting point for running software on a RISC-V target. The Debug feature provided by the spike simulator was used extensively in this workshop.To install the simulator locally on your linux machine , refere [here](https://github.com/riscv/riscv-isa-sim)
+Spike is the golden reference functional RISC-V ISA C++ sofware simulator. It provides full system emulation or proxied emulation with HTIF/FESVR. It serves as a starting point for running software on a RISC-V target. The Debug feature provided by the spike simulator was used extensively in this workshop. To install the simulator locally on your linux machine , refere [here](https://github.com/riscv/riscv-isa-sim)
 
 
 ## Installation 
 To avoid all the hassles of individually installing the compiler and the simulator, follow the steps below which makes it easier to install both the tools in your local machine.
 
-1. If git is installed in your local machine, use the following git command in your terminal to clone the repository at a desired location.
-</br>
+1. If git is installed in your local machine, use the following git command in your terminal to clone the repository at a desired location.Alternatively you can also go to https://github.com/kunalg123/riscv_workshop_collaterals to download the repository using the github gui as a zip file.<br/>
 `$git clone https://github.com/kunalg123/riscv_workshop_collaterals.git`
 </br>
-Alternatively you can also go to https://github.com/kunalg123/riscv_workshop_collaterals to download the repository using the github gui as a zip file.
+
 
 2. Change the current working directory to the folder installed in the previous step. <br/>
 `$cd riscv_workshop_collaterals`
 <br/>
 
-3. For installation of the complete toolchain, run the "run.sh" shell script. For this, type the following command:
-<br/>
+3. For installation of the complete toolchain, run the "run.sh" shell script. For this, type the following command:<br/>
 `$./run.sh`
 <br/>
-
+<insert image>
 Now the environment is setup and the next steps would explain about how to use the tools.
 
-## Converting a C Code to RISC V and simulations
-Create a C-program using any text editor and save it as a .c file. In this case, we used a C-program that calculates the sum of numbers from 1-9. The code can be found [here](). The program is then compiled using the gcc compiler. The steps involved in detail :-
+## Compiling a C Code to RISC V and simulations
+Create a C-program using any text editor and save it as a .c file. In this case, we used a C-program that calculates the sum of numbers from 1-9. The code can be found [here](). The program is then compiled using the gcc compiler.<br/> The steps involved :-
 
 1. Open any text editor, write a program in C and save it as a .c file.<br/>
 `$leafpad sum1ton.c`
-
-
-2. Compile the program using the GCC Compiler.<br/>
+<image>
+2. Compile the program using the GCC Compiler. <br/>
 `$gcc sum1ton.c`
 
 3. To run the compiled object file (Default file with name a.out will automatically be formed after compilation) use : <br/>
 `$./a.out`
-
+<image>
 
 Comparing the Instruction sets x86 and RISC-V :-<br/>
 
 1. To compile using the pre-existing x86 on your machine use:<br/>
-`gcc -o <object filename> <C-filename>`
+`$gcc -o <object filename> <C-filename>`
 2. To view the disassembly/assembly code - x86 :<br/>
-`objdump -d -M intel -s <object filename compiled using gcc>`
+`$objdump -d -M intel -s <object filename compiled using gcc>`
 3. To compile with RISC-V GCC compiler:<br/>
-`riscv64-unknown-elf-gcc <compiler option -O1 ; Ofast> <ABI specifier -lp64; -lp32; -ilp32> <architecture specifier -RV64 ; RV32> -o <object filename> <C filename>` 
-4. To view the disassembly/assembly code - RISC V :
-riscv64-unknown-elf-objdump -d <object filename> | less 
+`$riscv64-unknown-elf-gcc <compiler option -O1 ; Ofast> <ABI specifier -lp64; -lp32; -ilp32> <architecture specifier -RV64 ; RV32> -o <object filename> <C filename>` 
+4. To view the disassembly/assembly code - RISC V :<br/>
+`$riscv64-unknown-elf-objdump -d <object filename> | less` 
+
+<image>
 
 Viewing the assembly files would give a clear picture of the number of instructions used for the same program in both the cases.
 <br/>
 Spike is a software simulator, the object files generated in the previous steps can be run using spike through the following commands. The debug option provides a valuable tool to analyse the code execution line by line and view the contents of the register file at any point in time.<br/>
 
-1. To run the program using spike use :-
+1. To run the program using spike use :-<br/>
 `$spike pk <Object Filename>`
 
-2. To debug the assembly code line by line:-
+2. To debug the assembly code line by line, the following command is used. This command instantiates the file in debug mode <br/>
 `$spike -d pk <Object Filename>`
-The above command instantiates the file in debug mode
 
-3. `$until pc <Starting Address> <Ending Address>`
-The above command is used to run the program until the pc attains a certain value specified by the Ending Address. Take a look at the assembly code to view the address of different instructions and routines. subsequently pressing enter once :- executes the next line of code. 
 
-4. `$reg 0 <Register name>`
-The above command is used to view the contents of any register after execution of certain number of lines in the program .
+3. The following command is used to run the program until the pc attains a certain value specified by the Ending Address. Take a look at the assembly code to view the address of different instructions and routines. subsequently pressing enter once :- executes the next line of code.<br/>
+`$until pc <Starting Address> <Ending Address>`<br/>
 
+4. The following command is used to view the contents of any register after execution of certain number of lines in the program .<br/>
+`$reg 0 <Register name>`
+
+<insert image>
 The RISC V assembly code generated using the above steps is now executed by the core built in TL-Verilog, Maker Chip IDE.
-
+<br/><br/>
 
 # Application Binary Interface
-Application Binary Interface is an interface that allows application programmers to access hardware resources.It forms the interface that links RISC-V specification has 32 registers whose width is defined by XLEN which can be 32/64 for RV32/RV64 respectively.The data can be loaded from memory to registers or directly sent, Application programmer can access each of these 32 registers through its ABI name seen below
+Application Binary Interface is an interface that allows application programmers to access hardware resources. It forms the interface that links RISC-V specification has 32 registers whose width is defined by XLEN which can be 32/64 for RV32/RV64 respectively.The data can be loaded from memory to registers or directly sent, Application programmer can access each of these 32 registers through its ABI name seen below
 <Add Image>
 
 ## Using ABI calls to sum numbers from 1 to 9
 The main program is rewritten in terms of an ABI call from the main c program . The parameters are passed and the return value from the function is stored in a variable. 
-<Add image Main Block>
-
 <Add image .s code>
 <Add image .c code>
-
+<execution >
 # TL-Verilog 
 
  Transaction-Level Verilog (TL-Verilog) is an emerging extension to SystemVerilog that supports a new design methodology, called transaction-level design. A transaction, in this methodology, is an entity that moves through structures like pipelines, arbiters, and queues, A transaction might be a machine instruction, a flit of a packet, or a memory read/write. Transaction logic, like packet header decode or instruction execution, that operates on the transaction can be placed anywhere along the transaction's flow. Tools produce the logic to carry signals through their flows to stitch the transaction logic. 
 
 ## Maker Chip IDE
-Makerchip is a free online environment for developing high-quality integrated circuits. You can code, compile, simulate, and debug Verilog designs, all from your browser. Your code, block diagrams, and waveforms are tightly integrated.
+[Makerchip IDE](https://www.makerchip.com/sandbox/#) is a free online environment for developing high-quality integrated circuits. You can code, compile, simulate, and debug Verilog designs, all from your browser. Your code, block diagrams, and waveforms are tightly integrated.
 <br/>
 Makerchip IDE is kind enought to make-up random values for un-assigned signals and the waveforms can be viewed in the waveforms tab on the right. Waveforms are organized by TL-Verilog design hierarchy. Waveforms clearly show when signals are carrying meaningful data. designs are represented in logic diagrams. TL-Verilog design hierarchy, including pipelines and pipeline stages, provides organization to the logic diagrams. 
 <link>
@@ -128,16 +125,25 @@ Makerchip IDE is kind enought to make-up random values for un-assigned signals a
 ## Combinational logic 
 Signals in TL-Verilog do not need declarations and can directly be used in assignments statements.All the signals start with '$' in TL-Verilog. If a signal is used but never assigned, the ide takes care of assigning random values to those signals. 
 This example describes a combinational logic calculator designed using TL-verilog. 
+<image>
+
 ## Sequential logic 
 Signals can be preceded with a '>>n'  which will provide the value of that signal n cycles before .For example, >>1$num and >>2$num: the previous two values of $num. The use of >>1$num and >>2$num implies staging of $num through two flip-flops. 
 This example describes a two cycle sequential logic calculator designed using TL-verilog. 
+<image>
+
 ## Pipelined Logic 
 Timing abstract powerful feature of TL-Verilog which converts a code into pipeline stages easily. Whole code under |pipe scope with stages defined as @? .
 This example describes a pipelined calculator designed using TL-verilog. 
+<image>
+
 ## Validity
 Validity is TL-verilog means signal indicates validity of transaction and described as "when" scope else it will work as don't care. Denoted as ?$valid. Validity provides easier debug, cleaner design, better error checking, automated clock gating.
+<image>
+
 ## Hierarchy 
 Behavioral Hierarchy is a way to replicate logic in TL-Verilog.It provides named scope to related logic and can be used with indices to denote multiple instances of the same kind(similar to an array). This is mainly used to represent the memory elements which are basically an array.
+
 ## Other Design Constructs
 TL-verilog also supports some other design constructs which can be read in the maker chip ide , under the tutorials tab. 
 
@@ -148,7 +154,7 @@ The maker-chip platform converts the code written in TL-verilog to verilog and s
 The CPU is divided into different stages like Fetch, Decode and Execute. A single cycle processor is first designed. It is later pipelined by separating the instructions under different @ blocks.
 
 ## Program Counter Logic
-The PC (program counter) serves as the address bits for the instruction memory. The program counter needs to be incremented by 4 every cycle since RISC-V architecture follows byte addressing
+The PC (program counter) serves as the address bits for the instruction memory. The program counter needs to be incremented by 4 every cycle since RISC-V architecture follows byte addressing .
 
 ## Instruction Fetch 
 Instruction memory contains all the instructions. The memory contains 32-bit words which can be read one word at a time. RISC-V follows the little-endian format of memory where the lower order bytes are stored first in the lower Addresses. 
@@ -165,18 +171,30 @@ The Arithmetic and Logic unit unit that carries out all the arithmetic and logic
 During Decode Stage, branch target address is calculated and fed into PC mux. Before Execute Stage, once the operands are ready branch condition is checked.
 ## Pipelining the CPU
 The above single stage Core was enhanced to be staged across 3 stages in a pipeline, Final output where the core is computing Sum of 9 number. Converting non-pipelined CPU to pipelined CPU using timing abstract feature of TL-Verilog. This allows easy retiming wihtout any risk of funcational bugs. More details reagrding Timing Abstract in TL-Verilog can be found in IEEE Paper "Timing-Abstract Circuit Design in Transaction-Level Verilog" by Steven Hoover.
-
+ ```
+ |<pipe-name>
+    @<pipe stage>
+       Instructions present in this stage
+       
+    @<pipe_stage>
+       Instructions present in this stage
+```
 ## Data Memory - Load and Store
-Similar to branch, load will also have 3 cycle delay. The Data Memory is can perform a read and write operation simultaneously. Added test case to check fucntionality of load/store. Stored the summation of 1 to 9 on address 4 of Data Memory and loaded that value from Data Memory to r15.
+Similar to branch, load will also have 3 cycle delay. The Data Memory is can perform a read and write operation simultaneously. Added test case to check fucntionality of load/store. Stored the summation of 1 to 9 on address 4 of Data Memory and loaded that value from Data Memory to r15.The number of stages in the pipeline becomes 5, to accomodate the load and store stages. Modified the definition of Data memory to support half-word and byte load/stores as well.Data memory was modified based on the behavioral hierarchy supported in TL-Verilog.
 
-## Jumps operations, Half-word and Byte memory operations  
-Added Jumps and completed Instruction Decode and ALU for all instruction present in RV32I base integer instruction set.PC definition is updated to support jump operations as well. Modified the definition of Data memory to support half-word and byte load/stores as well.
+## Jumps operations 
+Added Jumps and completed Instruction Decode and ALU for all instruction present in RV32I base integer instruction set. PC definition is updated to support jump operations as well. 
 ## The complete RV32I core
 The code for the complete RV32I TL-Verilog implementation can be found in the folder <add>.
 
-# Conclusion
+
 
 # Acknowledgements
 
+* Kunal Ghosh, Co-founder, VSD Corp. Pvt. Ltd.
+* Steve Hoover, Founder, Redwood EDA.
+* Shivani Shah, Research Scholar at IIIT Bangalore.
+* Shivam Potdar, GSoC 2020 @fossi-foundation.
+* Vineet Jain, GSoC 2020 @fossi-foundation.
 
 
