@@ -39,19 +39,24 @@ Spike is the golden reference functional RISC-V ISA C++ sofware simulator. It pr
 
 ## Installation 
 To avoid all the hassles of individually installing the compiler and the simulator, follow the steps below which makes it easier to install both the tools in your local machine.
-
+<br/>
 1. If git is installed in your local machine, use the following git command in your terminal to clone the repository at a desired location.Alternatively you can also go to https://github.com/kunalg123/riscv_workshop_collaterals to download the repository using the github gui as a zip file.<br/>
 `$git clone https://github.com/kunalg123/riscv_workshop_collaterals.git`
 </br>
-![Step 1](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/step1install.PNG)
+
+![Step 1](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/step1install.PNG) <br/>
+
 2. Change the current working directory to the folder installed in the previous step. <br/>
 `$cd riscv_workshop_collaterals`
 <br/>
-![Step 2](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/install2.PNG)
+
+![Step 2](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/install2.PNG)<br/>
+
 3. For installation of the complete toolchain,make the shell file executable by using chmos and then  run the "run.sh" shell script. For this, type the following command:<br/>
 `$chmod +x run.sh`<br/>
 `$./run.sh`
 <br/>
+
 ![Step 3.1](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/install3.PNG)
 ![Step 3.2](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/install4.PNG)
 Now the environment is setup and the next steps would explain about how to use the tools.
@@ -60,7 +65,7 @@ Now the environment is setup and the next steps would explain about how to use t
 Create a C-program using any text editor and save it as a .c file. In this case, we used a C-program that calculates the sum of numbers from 1-9. The code can be found [here](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Codes/sum1ton.c). The program is then compiled using the gcc compiler.<br/> The steps involved :-
 
 1. Open any text editor, write a program in C and save it as a .c file.<br/>
-`$leafpad sum1ton.c`
+`$leafpad sum1ton.c`<br/>
 ![code](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/leafpad.PNG)
 2. Compile the program using the GCC Compiler. <br/>
 `$gcc sum1ton.c`
@@ -113,40 +118,47 @@ The main program is rewritten in terms of an ABI call from the main c program . 
 # TL-Verilog 
 
  Transaction-Level Verilog (TL-Verilog) is an emerging extension to SystemVerilog that supports a new design methodology, called transaction-level design. A transaction, in this methodology, is an entity that moves through structures like pipelines, arbiters, and queues, A transaction might be a machine instruction, a flit of a packet, or a memory read/write. Transaction logic, like packet header decode or instruction execution, that operates on the transaction can be placed anywhere along the transaction's flow. Tools produce the logic to carry signals through their flows to stitch the transaction logic. 
+<insert image>
 
 ## Maker Chip IDE
 [Makerchip IDE](https://www.makerchip.com/sandbox/#) is a free online environment for developing high-quality integrated circuits. You can code, compile, simulate, and debug Verilog designs, all from your browser. Your code, block diagrams, and waveforms are tightly integrated.
 <br/>
-Makerchip IDE is kind enought to make-up random values for un-assigned signals and the waveforms can be viewed in the waveforms tab on the right. Waveforms are organized by TL-Verilog design hierarchy. Waveforms clearly show when signals are carrying meaningful data. designs are represented in logic diagrams. TL-Verilog design hierarchy, including pipelines and pipeline stages, provides organization to the logic diagrams. 
-<snapshots>
+Makerchip IDE is kind enought to make-up random values for un-assigned signals and the waveforms can be viewed in the waveforms tab on the right. Waveforms are organized by TL-Verilog design hierarchy. Waveforms clearly show when signals are carrying meaningful data. designs are represented in logic diagrams. TL-Verilog design hierarchy, including pipelines and pipeline stages, provides organization to the logic diagrams.
+
+![Maker chip IDE](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/MakerchipIDE.png)
 
 ## Combinational logic 
 Signals in TL-Verilog do not need declarations and can directly be used in assignments statements.All the signals start with '$' in TL-Verilog. If a signal is used but never assigned, the ide takes care of assigning random values to those signals. 
 This example describes a combinational logic calculator designed using TL-verilog. 
-<image>
+![Simple Combinational logic Calculator](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/Calculator/Combinational_Calculator.png)
+![Combinational logic Calculator Waveforms ](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/Calculator/Combinational_Calculator_Waveforms.png)
 
 ## Sequential logic 
 Signals can be preceded with a '>>n'  which will provide the value of that signal n cycles before .For example, >>1$num and >>2$num: the previous two values of $num. The use of >>1$num and >>2$num implies staging of $num through two flip-flops. 
 This example describes a two cycle sequential logic calculator designed using TL-verilog. 
-<image>
+![Sequential logic Calculator](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/Calculator/Sequential_Calculator.PNG)
+![Sequential logic Waveforms](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/Calculator/Sequential_Calculator_waveform.PNG)
 
 ## Pipelined Logic 
-Timing abstract powerful feature of TL-Verilog which converts a code into pipeline stages easily. Whole code under |pipe scope with stages defined as @? .
-This example describes a pipelined calculator designed using TL-verilog. 
-<image>
+Timing abstract powerful feature of TL-Verilog which converts a code into pipeline stages easily. Whole code under |pipe scope with stages defined as @?. This example describes a pipelined calculator designed using TL-verilog. 
+![Pipelined Calculator](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/Calculator/Calculator_Counter_Pipeline.PNG)
+![Pipelined Calculator Waveforms](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/Calculator/Calculator_Counter_Pipeline_Waveform.PNG)
 
 ## Validity
 Validity is TL-verilog means signal indicates validity of transaction and described as "when" scope else it will work as don't care. Denoted as ?$valid. Validity provides easier debug, cleaner design, better error checking, automated clock gating.
-<image>
+![Validity signal](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/Calculator/2ccvalidity.PNG)
+![Associated waveforms](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/Calculator/2-Cycle-Calculator_waveform.PNG)
 
 ## Hierarchy 
-Behavioral Hierarchy is a way to replicate logic in TL-Verilog.It provides named scope to related logic and can be used with indices to denote multiple instances of the same kind(similar to an array). This is mainly used to represent the memory elements which are basically an array.
-
+Behavioral Hierarchy is a way to replicate logic in TL-Verilog.It provides named scope to related logic and can be used with indices to denote multiple instances of the same kind (Ex: an array). This is used to represent the memory elements which are basically an array of memory words
+![Hierarchy Example: Pythagoras Theorem]()
 ## Other Design Constructs
-TL-verilog also supports some other design constructs which can be read in the maker chip ide , under the tutorials tab. 
+TL-verilog also supports some other design constructs which can be read in the maker chip ide , under the tutorials tab.
+![Maker Chip Tutorials]()
 
 ## Integrating TL-Verilog with development flow
-The maker-chip platform converts the code written in TL-verilog to verilog and system verilog. So any further front-end development flow can use the generated verilog and system verilog files and follow the usual flow.
+The maker-chip platform converts the code written in TL-verilog to system verilog. So any further front-end development flow can use the generated system verilog code and follow the usual flow.
+![System Verilog code]()
 
 # RV32I Core Implementation
 The CPU is divided into different stages like Fetch, Decode and Execute. A single cycle processor is first designed. It is later pipelined by separating the instructions under different @ blocks.
