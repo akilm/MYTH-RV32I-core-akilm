@@ -118,7 +118,7 @@ The main program is rewritten in terms of an ABI call from the main c program . 
 # TL-Verilog 
 
  Transaction-Level Verilog (TL-Verilog) is an emerging extension to SystemVerilog that supports a new design methodology, called transaction-level design. A transaction, in this methodology, is an entity that moves through structures like pipelines, arbiters, and queues, A transaction might be a machine instruction, a flit of a packet, or a memory read/write. Transaction logic, like packet header decode or instruction execution, that operates on the transaction can be placed anywhere along the transaction's flow. Tools produce the logic to carry signals through their flows to stitch the transaction logic. 
-<insert image>
+![TL-Verilog](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/TLVerilog.PNG)
 
 ## Maker Chip IDE
 [Makerchip IDE](https://www.makerchip.com/sandbox/#) is a free online environment for developing high-quality integrated circuits. You can code, compile, simulate, and debug Verilog designs, all from your browser. Your code, block diagrams, and waveforms are tightly integrated.
@@ -151,14 +151,14 @@ Validity is TL-verilog means signal indicates validity of transaction and descri
 
 ## Hierarchy 
 Behavioral Hierarchy is a way to replicate logic in TL-Verilog.It provides named scope to related logic and can be used with indices to denote multiple instances of the same kind (Ex: an array). This is used to represent the memory elements which are basically an array of memory words
-![Hierarchy Example: Pythagoras Theorem]()
+![Hierarchy Example: Pythagoras Theorem](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/RISC-V/hierarchy.PNG)
 ## Other Design Constructs
 TL-verilog also supports some other design constructs which can be read in the maker chip ide , under the tutorials tab.
-![Maker Chip Tutorials]()
+![Maker Chip Tutorials](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/Tutorials.PNG)
 
 ## Integrating TL-Verilog with development flow
 The maker-chip platform converts the code written in TL-verilog to system verilog. So any further front-end development flow can use the generated system verilog code and follow the usual flow.
-![System Verilog code]()
+![System Verilog code](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/System_Verilog.PNG)
 
 # RV32I Core Implementation
 The CPU is divided into different stages like Fetch, Decode and Execute. A single cycle processor is first designed. It is later pipelined by separating the instructions under different @ blocks.
