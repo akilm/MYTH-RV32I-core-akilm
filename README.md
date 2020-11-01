@@ -91,26 +91,25 @@ Spike is a software simulator, the object files generated in the previous steps 
 2. To debug the assembly code line by line, the following command is used. This command instantiates the file in debug mode <br/>
 `$spike -d pk <Object Filename>`
 
-
 3. The following command is used to run the program until the pc attains a certain value specified by the Ending Address. Take a look at the assembly code to view the address of different instructions and routines. subsequently pressing enter once :- executes the next line of code.<br/>
-`$until pc <Starting Address> <Ending Address>`<br/>
+`$until pc 0 <Ending Address>`<br/>
 
 4. The following command is used to view the contents of any register after execution of certain number of lines in the program .<br/>
 `$reg 0 <Register name>`
 
-<insert image>
+![Spike debug](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/spikedebug.png)
 The RISC V assembly code generated using the above steps is now executed by the core built in TL-Verilog, Maker Chip IDE.
 <br/><br/>
 
 # Application Binary Interface
 Application Binary Interface is an interface that allows application programmers to access hardware resources. It forms the interface that links RISC-V specification has 32 registers whose width is defined by XLEN which can be 32/64 for RV32/RV64 respectively.The data can be loaded from memory to registers or directly sent, Application programmer can access each of these 32 registers through its ABI name seen below
-<Add Image>
-
+![Application Binary Interface : RISC-V](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/ABI.png)
 ## Using ABI calls to sum numbers from 1 to 9
 The main program is rewritten in terms of an ABI call from the main c program . The parameters are passed and the return value from the function is stored in a variable. 
-<Add image .s code>
-<Add image .c code>
-<execution >
+![ABI call](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/callflow.PNG)
+![Main C program](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/sum1tonc.PNG)
+![ABI function](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/loads.PNG)
+
 # TL-Verilog 
 
  Transaction-Level Verilog (TL-Verilog) is an emerging extension to SystemVerilog that supports a new design methodology, called transaction-level design. A transaction, in this methodology, is an entity that moves through structures like pipelines, arbiters, and queues, A transaction might be a machine instruction, a flit of a packet, or a memory read/write. Transaction logic, like packet header decode or instruction execution, that operates on the transaction can be placed anywhere along the transaction's flow. Tools produce the logic to carry signals through their flows to stitch the transaction logic. 
