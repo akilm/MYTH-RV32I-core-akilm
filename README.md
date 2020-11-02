@@ -53,31 +53,22 @@ alt="alt text">
 
 2. Change the current working directory to the folder installed in the previous step. <br/>
 `$cd riscv_workshop_collaterals`
-<br/>
-<p align="center">
-<img src="https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/install2.PNG" 
-alt="alt text">
-<p/>
-
 
 3. For installation of the complete toolchain,make the shell file executable by using chmos and then  run the "run.sh" shell script. For this, type the following command:<br/>
 `$chmod +x run.sh`<br/>
 `$./run.sh`
-<p align="center">
-<img src="https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/install3.PNG" 
-alt="alt text">
-<p/>
-<p align="center">
-<img src="https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/install4.PNG" 
-alt="alt text">
-<p/>
-<br/>
+
 ## Compiling a C Code to RISC V and simulations
 Create a C-program using any text editor and save it as a .c file. In this case, we used a C-program that calculates the sum of numbers from 1-9. The code can be found [here](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Codes/sum1ton.c). The program is then compiled using the gcc compiler.<br/> The steps involved :-
 
 1. Open any text editor, write a program in C and save it as a .c file.<br/>
 `$leafpad sum1ton.c`<br/>
-![code](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/leafpad.PNG)
+
+<p align="center">
+<img src="https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/leafpad.PNG" 
+alt="alt text" width = 396 height = 283>
+<p/>
+
 2. Compile the program using the GCC Compiler. <br/>
 `$gcc sum1ton.c`
 3. To run the compiled object file (Default file with name a.out will automatically be formed after compilation) use : <br/>
@@ -112,8 +103,11 @@ Spike is a software simulator, the object files generated in the previous steps 
 
 4. The following command is used to view the contents of any register after execution of certain number of lines in the program .<br/>
 `$reg 0 <Register name>`
-
-![Spike debug](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/spikedebug.png)
+<p align="center">
+<img src="https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/spikedebug.png" 
+alt="alt text" width = 678 height = 132>
+<p/>
+<br/>
 The RISC V assembly code generated using the above steps is now executed by the core built in TL-Verilog, Maker Chip IDE.
 <br/><br/>
 
