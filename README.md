@@ -108,24 +108,27 @@ The RISC V assembly code generated using the above steps is now executed by the 
 <br/><br/>
 
 # Application Binary Interface
-Application Binary Interface is an interface that allows application programmers to access hardware resources. It forms the interface that links RISC-V specification has 32 registers whose width is defined by XLEN which can be 32/64 for RV32/RV64 respectively.The data can be loaded from memory to registers or directly sent, Application programmer can access each of these 32 registers through its ABI name seen below
+Application Binary Interface is an interface that allows application programmers to access hardware resources. It forms the interface that links RISC-V specification has 32 registers whose width is defined by XLEN which can be 32/64 for RV32/RV64 respectively.The data can be loaded from memory to registers or directly sent, Application programmer can access each of these 32 registers through its ABI name seen below <br/>
 ![Application Binary Interface : RISC-V](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/ABI.png)
 ## Using ABI calls to sum numbers from 1 to 9
 The main program is rewritten in terms of an ABI call from the main c program . The parameters are passed and the return value from the function is stored in a variable. <br/><br/>
 **Function Call Flow**<br/>
 <img src="https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/callflow.PNG" 
-alt="alt text" > <br/><br/>
+alt="alt text" width=414 height=357 > <br/><br/>
 **Main C Program**<br/>
 <img src="https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/sum1tonc.PNG" 
 alt="alt text" > <br/><br/>
-**ASM function**<br/>     
+**ASM function**  
 <img src="https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/loads.PNG" 
 alt="alt text" > <br/>
 
 # TL-Verilog 
 
- Transaction-Level Verilog (TL-Verilog) is an emerging extension to SystemVerilog that supports a new design methodology, called transaction-level design. A transaction, in this methodology, is an entity that moves through structures like pipelines, arbiters, and queues, A transaction might be a machine instruction, a flit of a packet, or a memory read/write. Transaction logic, like packet header decode or instruction execution, that operates on the transaction can be placed anywhere along the transaction's flow. Tools produce the logic to carry signals through their flows to stitch the transaction logic. 
-![TL-Verilog](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/TLVerilog.PNG)
+ Transaction-Level Verilog (TL-Verilog) is an emerging extension to SystemVerilog that supports a new design methodology, called transaction-level design. A transaction, in this methodology, is an entity that moves through structures like pipelines, arbiters, and queues, A transaction might be a machine instruction, a flit of a packet, or a memory read/write. Transaction logic, like packet header decode or instruction execution, that operates on the transaction can be placed anywhere along the transaction's flow. Tools produce the logic to carry signals through their flows to stitch the transaction logic.
+<p align="center">
+<img src="https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/TLVerilog.PNG" 
+alt="alt text" width = 523 height = 256 >
+<p/>
 
 ## Maker Chip IDE
 [Makerchip IDE](https://www.makerchip.com/sandbox/#) is a free online environment for developing high-quality integrated circuits. You can code, compile, simulate, and debug Verilog designs, all from your browser. Your code, block diagrams, and waveforms are tightly integrated.
