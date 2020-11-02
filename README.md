@@ -21,12 +21,11 @@ The RISC V Architecture is defined as a base integer ISA, which must be present 
 2. Corresponding size of the address space
 3. Number of integer registers (32 in RISC-V)
 
-The ISA base and its extensions are developed in a collective effort between industry, the research community and educational institutions.
+The ISA base and its extensions are developed in a collective effort between industry, the research community and educational institutions.More details on RISC-V ISA can be obtained [here](https://riscv.org/technical/specifications/).
+
 <br/>
 <img src="https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/Base_extensions.PNG" 
 alt="alt text" width="384" height="456">
-<br/>
-More details on RISC-V ISA can be obtained [here](https://riscv.org/technical/specifications/).
 
 # RISC-V Toolchain 
 A generic RISC V toolchain involves a compiler to compile the source code to RISC-V target and a simulator for debugging the code. In this workshop, GCC cross compiler was used to compile the c-program and spike simulator to debug and verify the code.
@@ -46,25 +45,33 @@ To avoid all the hassles of individually installing the compiler and the simulat
 <br/>
 1. If git is installed in your local machine, use the following git command in your terminal to clone the repository at a desired location.Alternatively you can also go to https://github.com/kunalg123/riscv_workshop_collaterals to download the repository using the github gui as a zip file.<br/>
 `$git clone https://github.com/kunalg123/riscv_workshop_collaterals.git`
-</br>
+<p align="center">
+<img src="https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/step1install.PNG" 
+alt="alt text">
+<p/>
 
-![Step 1](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/step1install.PNG) <br/>
 
 2. Change the current working directory to the folder installed in the previous step. <br/>
 `$cd riscv_workshop_collaterals`
 <br/>
+<p align="center">
+<img src="https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/install2.PNG" 
+alt="alt text">
+<p/>
 
-![Step 2](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/install2.PNG)<br/>
 
 3. For installation of the complete toolchain,make the shell file executable by using chmos and then  run the "run.sh" shell script. For this, type the following command:<br/>
 `$chmod +x run.sh`<br/>
 `$./run.sh`
+<p align="center">
+<img src="https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/install3.PNG" 
+alt="alt text">
+<p/>
+<p align="center">
+<img src="https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/install4.PNG" 
+alt="alt text">
+<p/>
 <br/>
-
-![Step 3.1](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/install3.PNG)
-![Step 3.2](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/install4.PNG)
-Now the environment is setup and the next steps would explain about how to use the tools.
-
 ## Compiling a C Code to RISC V and simulations
 Create a C-program using any text editor and save it as a .c file. In this case, we used a C-program that calculates the sum of numbers from 1-9. The code can be found [here](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Codes/sum1ton.c). The program is then compiled using the gcc compiler.<br/> The steps involved :-
 
