@@ -194,7 +194,7 @@ The above single stage Core was enhanced to be staged across 3 stages in a pipel
     @<pipe_stage>
        Instructions present in this stage
 ```
-![ALU and CU](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/RISC-V/alu.PNG)
+![ALU and CU](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/pipelined.PNG)
 
 ## Data Memory - Load and Store
 Similar to branch, load will also have 3 cycle delay. The Data Memory is can perform a read and write operation simultaneously. Added test case to check fucntionality of load/store. Stored the summation of 1 to 9 on address 4 of Data Memory and loaded that value from Data Memory to r15.The number of stages in the pipeline becomes 5, to accomodate the load and store stages. Modified the definition of Data memory to support half-word and byte load/stores as well.Data memory was modified based on the behavioral hierarchy supported in TL-Verilog.
@@ -204,6 +204,7 @@ Similar to branch, load will also have 3 cycle delay. The Data Memory is can per
 ## The complete RV32I core
 Added Jumps and completed Instruction Decode and ALU for all instruction present in RV32I base integer instruction set. PC definition is updated to support jump operations as well. The code for the complete RV32I TL-Verilog implementation can be found in the file [RV32I Core](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Codes/risc-v_solutions.tlv).
 
+![RV32I Core Block diagram](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/Final.PNG)
 
 
 # Acknowledgements
