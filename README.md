@@ -172,7 +172,7 @@ Instruction memory contains all the instructions. The memory contains 32-bit wor
 ![PC Update](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/RISC-V/PC_Update_b.PNG)
 ![PC Update Waveforms](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/RISC-V/PC_Update_w.PNG)
 ## Instruction Decode
-The instruction fetched in the previous state is decoded to identify the type of the instruction.RISC V classifies instructions into n-basic types namely :- R (Register), I(Immediate), S(Store),B(Branch),U (Upper Immediates), J(Jump). The decoding stage allows the CPU to determine what instruction is to be performed so that the CPU can tell how many operands it needs to fetch in order to perform the instruction
+The instruction fetched in the previous state is decoded to identify the type of the instruction.RISC V classifies instructions into n-basic types namely :- R (Register), I(Immediate), S(Store), B(Branch), U(Upper Immediates), J(Jump). The decoding stage allows the CPU to determine what instruction is to be performed so that the CPU can tell how many operands it needs to fetch in order to perform the instruction
 ![Instruction Decode](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/RISC-V/decode_fields.PNG)
 ![Instruction Decode Waveforms](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/RISC-V/decode_fields_w.PNG)
 ## Register File - Read and Write
@@ -184,6 +184,7 @@ Here the Register file supports 2 Read Operations and 1 Write operation Simultan
 ## ALU - Arithmetic and Logic Unit and CU - Control Unit 
 The Arithmetic and Logic unit unit that carries out all the arithmetic and logic operations on the operands provided and stores the output of the operation in $Result[31:0] signal. During Decode Stage, branch target address is calculated and fed into PC mux. Before Execute Stage, once the operands are ready branch condition is checked.
 ![ALU and CU](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/RISC-V/alu.PNG)
+!![ALU and CU](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/RISC-V/ALUCU.PNG)
 ## Pipelining the CPU
 The above single stage Core was enhanced to be staged across 3 stages in a pipeline, Final output where the core is computing Sum of 9 number. Converting non-pipelined CPU to pipelined CPU using timing abstract feature of TL-Verilog. This allows easy retiming wihtout any risk of funcational bugs. More details reagrding Timing Abstract in TL-Verilog can be found in IEEE Paper "Timing-Abstract Circuit Design in Transaction-Level Verilog" by Steven Hoover.
  ```
@@ -194,7 +195,7 @@ The above single stage Core was enhanced to be staged across 3 stages in a pipel
     @<pipe_stage>
        Instructions present in this stage
 ```
-![ALU and CU](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/pipelined.PNG)
+![Pipelining the CPU](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/pipelined.PNG)
 
 ## Data Memory - Load and Store
 Similar to branch, load will also have 3 cycle delay. The Data Memory is can perform a read and write operation simultaneously. Added test case to check fucntionality of load/store. Stored the summation of 1 to 9 on address 4 of Data Memory and loaded that value from Data Memory to r15.The number of stages in the pipeline becomes 5, to accomodate the load and store stages. Modified the definition of Data memory to support half-word and byte load/stores as well.Data memory was modified based on the behavioral hierarchy supported in TL-Verilog.
@@ -206,6 +207,7 @@ Added Jumps and completed Instruction Decode and ALU for all instruction present
 
 ![RV32I Core Block diagram](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/Final.PNG)
 
+![RV32I Flow Diagram](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/pipeline flow dia.PNG)
 
 # Acknowledgements
 
