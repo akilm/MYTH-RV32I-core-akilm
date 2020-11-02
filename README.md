@@ -184,7 +184,7 @@ Here the Register file supports 2 Read Operations and 1 Write operation Simultan
 ## ALU - Arithmetic and Logic Unit and CU - Control Unit 
 The Arithmetic and Logic unit unit that carries out all the arithmetic and logic operations on the operands provided and stores the output of the operation in $Result[31:0] signal. During Decode Stage, branch target address is calculated and fed into PC mux. Before Execute Stage, once the operands are ready branch condition is checked.
 ![ALU and CU](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/RISC-V/alu.PNG)
-!![ALU and CU](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/RISC-V/ALUCU.PNG)
+!![ALU and CU](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/ALUCU.PNG)
 ## Pipelining the CPU
 The above single stage Core was enhanced to be staged across 3 stages in a pipeline, Final output where the core is computing Sum of 9 number. Converting non-pipelined CPU to pipelined CPU using timing abstract feature of TL-Verilog. This allows easy retiming wihtout any risk of funcational bugs. More details reagrding Timing Abstract in TL-Verilog can be found in IEEE Paper "Timing-Abstract Circuit Design in Transaction-Level Verilog" by Steven Hoover.
  ```
@@ -207,7 +207,7 @@ Added Jumps and completed Instruction Decode and ALU for all instruction present
 
 ![RV32I Core Block diagram](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/Final.PNG)
 
-![RV32I Flow Diagram](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/pipeline flow dia.PNG)
+![RV32I Flow Diagram](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/pipeline%20flow%20dia.PNG)
 
 # Acknowledgements
 
