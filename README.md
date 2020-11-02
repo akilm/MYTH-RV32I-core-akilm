@@ -213,7 +213,7 @@ Similar to branch, load will also have 3 cycle delay. The Data Memory is can per
 ![Data Memory](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/RISC-V/half_word_and_byte.PNG)
 
 ## The complete RV32I core
-Added Jumps and completed Instruction Decode and ALU for all instruction present in RV32I base integer instruction set. PC definition is updated to support jump operations as well. The code for the complete RV32I TL-Verilog implementation can be found in the file [RV32I Core](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Codes/risc-v_solutions.tlv).
+Added Jumps and completed Instruction Decode and ALU for all instruction present in RV32I base integer instruction set. PC definition is updated to support jump operations as well.The Core also supports **Half-Word and Byte Load/Stores instructions from Data Memory** The code for the complete RV32I TL-Verilog implementation can be found in the file [RV32I Core](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Codes/risc-v_solutions.tlv).
 
 ![RV32I Core Block diagram](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/Final.PNG)
 
@@ -221,8 +221,8 @@ Added Jumps and completed Instruction Decode and ALU for all instruction present
 
 # Acknowledgements
 
-* Steve Hoover, Founder, Redwood EDA.
-* Kunal Ghosh, Co-founder, VSD Corp. Pvt. Ltd.
+* Steve Hoover, Founder, [Redwood EDA](https://www.vlsisystemdesign.com/).
+* Kunal Ghosh, Co-founder, [VSD Corp. Pvt. Ltd](https://www.redwoodeda.com/).
 * Shivani Shah, Research Scholar at IIIT Bangalore.
 * Shivam Potdar, GSoC 2020 @fossi-foundation.
 * Vineet Jain, GSoC 2020 @fossi-foundation.
