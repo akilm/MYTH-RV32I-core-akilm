@@ -63,11 +63,8 @@ Create a C-program using any text editor and save it as a .c file. In this case,
 
 1. Open any text editor, write a program in C and save it as a .c file.<br/>
 `$leafpad sum1ton.c`<br/>
-
-<p align="center">
 <img src="https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/leafpad.PNG" 
 alt="alt text" width = 396 height = 283>
-<p/>
 
 2. Compile the program using the GCC Compiler. <br/>
 `$gcc sum1ton.c`
@@ -103,10 +100,9 @@ Spike is a software simulator, the object files generated in the previous steps 
 
 4. The following command is used to view the contents of any register after execution of certain number of lines in the program .<br/>
 `$reg 0 <Register name>`
-<p align="center">
 <img src="https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/spikedebug.png" 
 alt="alt text" width = 678 height = 132>
-<p/>
+
 <br/>
 The RISC V assembly code generated using the above steps is now executed by the core built in TL-Verilog, Maker Chip IDE.
 <br/><br/>
@@ -115,10 +111,19 @@ The RISC V assembly code generated using the above steps is now executed by the 
 Application Binary Interface is an interface that allows application programmers to access hardware resources. It forms the interface that links RISC-V specification has 32 registers whose width is defined by XLEN which can be 32/64 for RV32/RV64 respectively.The data can be loaded from memory to registers or directly sent, Application programmer can access each of these 32 registers through its ABI name seen below
 ![Application Binary Interface : RISC-V](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/ABI.png)
 ## Using ABI calls to sum numbers from 1 to 9
-The main program is rewritten in terms of an ABI call from the main c program . The parameters are passed and the return value from the function is stored in a variable. 
-![ABI call](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/callflow.PNG)
-![Main C program](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/sum1tonc.PNG)
-![ABI function](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/loads.PNG)
+The main program is rewritten in terms of an ABI call from the main c program . The parameters are passed and the return value from the function is stored in a variable. <br/>
+<img src="https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/callflow.PNG" 
+alt="alt text" > <br/>
+          **Function Call Flow** 
+<br/>
+<img src="https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/sum1tonc.PNG" 
+alt="alt text" > <br/>
+          **Main C Program**
+<br/>
+<img src="https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/loads.PNG" 
+alt="alt text" > <br/>
+          **ASM function**
+
 
 # TL-Verilog 
 
