@@ -99,7 +99,7 @@ Spike is a software simulator, the object files generated in the previous steps 
 `$until pc 0 <Ending Address>`<br/>
 
 4. The following command is used to view the contents of any register after execution of certain number of lines in the program .<br/>
-`$reg 0 <Register name>`
+`$reg 0 <Register name>` <br/>
 <img src="https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/spikedebug.png" 
 alt="alt text" width = 678 height = 132>
 
@@ -112,18 +112,15 @@ Application Binary Interface is an interface that allows application programmers
 ![Application Binary Interface : RISC-V](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/ABI.png)
 ## Using ABI calls to sum numbers from 1 to 9
 The main program is rewritten in terms of an ABI call from the main c program . The parameters are passed and the return value from the function is stored in a variable. <br/>
+**Function Call Flow**<br/>
 <img src="https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/callflow.PNG" 
 alt="alt text" > <br/>
-          **Function Call Flow** 
-<br/>
+**Main C Program**<br/>
 <img src="https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/sum1tonc.PNG" 
 alt="alt text" > <br/>
-          **Main C Program**
-<br/>
+**ASM function**<br/>     
 <img src="https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/loads.PNG" 
 alt="alt text" > <br/>
-          **ASM function**
-
 
 # TL-Verilog 
 
