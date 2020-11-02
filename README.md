@@ -1,6 +1,6 @@
 # RISC-V Processor Design with TL-Verilog
 
-<br/>This repository contains all the information needed to build your RISC-V pipelined core, which has support of base interger RV32I instruction format using TL-Verilog on makerchip platform.
+This repository contains all the information needed to build your RISC-V pipelined core, which has support of base interger RV32I instruction format using TL-Verilog on makerchip platform.
 The core was built during the MYTH (Microprocessor for you in thirty hours) Workshop conducted by Kunal Ghosh (VLSI System Design) and Steve Hoover (Redwood EDA) . The first two days was focussed on how an application written in higher level language (C, C++, JAVA, Python) communicates with the processor, details such as how a compiler / assembler works, interfaces between the Application layer --> OS and RTL, An introduction to RISC V ISA taught by Kunal Ghosh. Days 3-5 were all about Computer Architecture, RISCV ISA and Implementing a 3 stage pipelined RISCV Core on Makerchip IDE using TL-Verilog taught by Steve Hoover.
 
 # RISC V ISA 
@@ -165,20 +165,25 @@ The CPU is divided into different stages like Fetch, Decode and Execute. A singl
 
 ## Program Counter Logic
 The PC (program counter) serves as the address bits for the instruction memory. The program counter needs to be incremented by 4 every cycle since RISC-V architecture follows byte addressing .
-
+![PC Update](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/RISC-V/PC_Update_b.PNG)
+![PC Update](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/RISC-V/PC_Update_w.PNG)
 ## Instruction Fetch 
 Instruction memory contains all the instructions. The memory contains 32-bit words which can be read one word at a time. RISC-V follows the little-endian format of memory where the lower order bytes are stored first in the lower Addresses. 
-
+![PC Update](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/RISC-V/PC_Update_b.PNG)
+![PC Update Waveforms](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/RISC-V/PC_Update_w.PNG)
 ## Instruction Decode
 The instruction fetched in the previous state is decoded to identify the type of the instruction.RISC V classifies instructions into n-basic types namely :- R (Register), I(Immediate), S(Store),B(Branch),U (Upper Immediates), J(Jump). The decoding stage allows the CPU to determine what instruction is to be performed so that the CPU can tell how many operands it needs to fetch in order to perform the instruction
+![Instruction Decode](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/RISC-V/decode_fields.PNG)
+![Instruction Decode Waveforms](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/RISC-V/decode_fields_w.PNG)
 ## Register File - Read and Write
 The Register File contains 32 registers as specified by RISC-V ISA and each are named x0-x31.
 Here the Register file supports 2 Read Operations and 1 Write operation Simultaneously (same clock cycle).
-## ALU - Arithmetic and Logic Unit
-The Arithmetic and Logic unit unit that carries out all the arithmetic and logic operations on the operands provided and stores the output of the operation in $Result[31:0] signal.
+![Register File Read/Write](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/RISC-V/rf_write.PNG)
+![Register File Read/Write](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/RISC-V/rg_write_w.PNG)
 
-## CU - Control Unit
-During Decode Stage, branch target address is calculated and fed into PC mux. Before Execute Stage, once the operands are ready branch condition is checked.
+## ALU - Arithmetic and Logic Unit and CU - Control Unit 
+The Arithmetic and Logic unit unit that carries out all the arithmetic and logic operations on the operands provided and stores the output of the operation in $Result[31:0] signal. During Decode Stage, branch target address is calculated and fed into PC mux. Before Execute Stage, once the operands are ready branch condition is checked.
+![ALU and CU](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/RISC-V/alu.PNG)
 ## Pipelining the CPU
 The above single stage Core was enhanced to be staged across 3 stages in a pipeline, Final output where the core is computing Sum of 9 number. Converting non-pipelined CPU to pipelined CPU using timing abstract feature of TL-Verilog. This allows easy retiming wihtout any risk of funcational bugs. More details reagrding Timing Abstract in TL-Verilog can be found in IEEE Paper "Timing-Abstract Circuit Design in Transaction-Level Verilog" by Steven Hoover.
  ```
@@ -189,20 +194,22 @@ The above single stage Core was enhanced to be staged across 3 stages in a pipel
     @<pipe_stage>
        Instructions present in this stage
 ```
+![ALU and CU](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/RISC-V/alu.PNG)
+
 ## Data Memory - Load and Store
 Similar to branch, load will also have 3 cycle delay. The Data Memory is can perform a read and write operation simultaneously. Added test case to check fucntionality of load/store. Stored the summation of 1 to 9 on address 4 of Data Memory and loaded that value from Data Memory to r15.The number of stages in the pipeline becomes 5, to accomodate the load and store stages. Modified the definition of Data memory to support half-word and byte load/stores as well.Data memory was modified based on the behavioral hierarchy supported in TL-Verilog.
+![Data Memory](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/RISC-V/dmem.PNG)
+![Data Memory](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/RISC-V/half_word_and_byte.PNG)
 
-## Jumps operations 
-Added Jumps and completed Instruction Decode and ALU for all instruction present in RV32I base integer instruction set. PC definition is updated to support jump operations as well. 
 ## The complete RV32I core
-The code for the complete RV32I TL-Verilog implementation can be found in the folder <add>.
+Added Jumps and completed Instruction Decode and ALU for all instruction present in RV32I base integer instruction set. PC definition is updated to support jump operations as well. The code for the complete RV32I TL-Verilog implementation can be found in the file [RV32I Core](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Codes/risc-v_solutions.tlv).
 
 
 
 # Acknowledgements
 
-* Kunal Ghosh, Co-founder, VSD Corp. Pvt. Ltd.
 * Steve Hoover, Founder, Redwood EDA.
+* Kunal Ghosh, Co-founder, VSD Corp. Pvt. Ltd.
 * Shivani Shah, Research Scholar at IIIT Bangalore.
 * Shivam Potdar, GSoC 2020 @fossi-foundation.
 * Vineet Jain, GSoC 2020 @fossi-foundation.
