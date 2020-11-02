@@ -8,7 +8,8 @@ The core was built during the MYTH (Microprocessor for you in thirty hours) Work
 ## Introduction
 
 The RISC V is an open source specification of an Instruction Set Architecture (ISA). Unlike most other ISA designs, the RISC-V ISA is provided under open source licenses that do not require fees to use, which provides it a huge edge over other commercially available ISAs. It is a simple, stable, small standard base ISA with extensible ISA support, that has been redefining the flexibility, scalability, extensibility, and modularity of chip designs. 
-![RISC-V ](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/riscv-logo-1.png)
+<img src="https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/riscv-logo-1.png" 
+alt="alt text" >
 
 ## RISC-V International
 The RISC-V Foundation was founded in 2015 to build an open, collaborative community of software and hardware innovators based on the RISC-V ISA. The Foundation, a non-profit corporation controlled by its members, directed the development to drive the initial adoption of the RISC-V ISA. For more information visit the site : www.riscv.org
@@ -21,7 +22,10 @@ The RISC V Architecture is defined as a base integer ISA, which must be present 
 3. Number of integer registers (32 in RISC-V)
 
 The ISA base and its extensions are developed in a collective effort between industry, the research community and educational institutions.
-![RISC-V ISA base and Extensions](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/Base_extensions.PNG)
+<br/>
+<img src="https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/Base_extensions.PNG" 
+alt="alt text" width="384" height="456">
+<br/>
 More details on RISC-V ISA can be obtained [here](https://riscv.org/technical/specifications/).
 
 # RISC-V Toolchain 
@@ -162,7 +166,7 @@ The maker-chip platform converts the code written in TL-verilog to system verilo
 
 # RV32I Core Implementation
 The CPU is divided into different stages like Fetch, Decode and Execute. A single cycle processor is first designed. It is later pipelined by separating the instructions under different @ blocks.
-
+![Overall Block Diagram](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/README%20images/RISCV%20Block%20DIagram.PNG)
 ## Program Counter Logic
 The PC (program counter) serves as the address bits for the instruction memory. The program counter needs to be incremented by 4 every cycle since RISC-V architecture follows byte addressing .
 ![PC Update](https://github.com/RISCV-MYTH-WORKSHOP/MYTH-RV32I-core-akilm/blob/master/Images/RISC-V/PC_Update_b.PNG)
